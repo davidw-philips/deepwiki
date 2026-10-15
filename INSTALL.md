@@ -8,6 +8,16 @@ This guide covers installing and configuring `deepwiki` across different environ
 uv tool install git+https://github.com/davidw-philips/deepwiki
 ```
 
+### Updating DeepWiki
+
+To update to the latest version (which overwrites any previous installation):
+
+```bash
+uv tool install git+https://github.com/davidw-philips/deepwiki --force
+```
+
+The `--force` flag ensures the tool is reinstalled even if already present, guaranteeing you have the latest fixes, features, and improvements.
+
 ### After Installation
 
 #### For End Users
@@ -117,6 +127,21 @@ deepwiki --help
 ```
 
 You should see output listing available DeepWiki tools.
+
+## Updating DeepWiki (Important)
+
+To update deepwiki to the latest version with bug fixes and improvements:
+
+```bash
+# Update with --force to override existing installation
+uv tool install git+https://github.com/davidw-philips/deepwiki --force
+```
+
+**Always use `--force`** when updating to ensure:
+- ✅ Latest bug fixes are applied
+- ✅ New features are installed
+- ✅ Previous version is completely replaced
+- ✅ No conflicts from partial updates
 
 ## Using DeepWiki with Agents
 
