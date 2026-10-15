@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "deepwiki"
+version = "0.1.0"
+description = "Lightweight CLI client for DeepWiki's remote MCP server with dynamic tool discovery and zero third-party dependencies."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "David Philips" }
+]
+keywords = [
+    "deepwiki",
+    "mcp",
+    "github",
+    "repository",
+    "documentation",
+    "ai-agent",
+    "cli",
+    "agent-skill"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Documentation",
+    "Topic :: Utilities"
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/davidw-philips/deepwiki"
+Repository = "https://github.com/davidw-philips/deepwiki.git"
+Issues = "https://github.com/davidw-philips/deepwiki/issues"
+
+[project.scripts]
+deepwiki = "deepwiki.cli:main"
