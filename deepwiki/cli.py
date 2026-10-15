@@ -103,7 +103,10 @@ def print_tool_description(tool_name: str, tools: List[Dict[str, Any]]) -> None:
 
 
 def print_result(response: Dict[str, Any]) -> None:
-    """Render DeepWiki text results without hiding non-text MCP content."""
+    """Render DeepWiki text results without hiding non-text MCP content.
+    
+    Handles encoding on Windows by using utf-8 with error handling.
+    """
     if "error" in response:
         print(f"MCP error: {json.dumps(response['error'], indent=2)}", file=sys.stderr)
         sys.exit(1)
@@ -111,14 +114,20 @@ def print_result(response: Dict[str, Any]) -> None:
     result = response.get("result", {})
     content = result.get("content", [])
     if not content:
-        print(json.dumps(result, indent=2))
+        print(json.dumps(result, indent=2, ensure_ascii=False))
         return
 
     for item in content:
         if item.get("type") == "text":
-            print(item.get("text", ""))
+            text = item.get("text", "")
+            # Use UTF-8 encoding with error handling for cross-platform compatibility
+            try:
+                print(text)
+            except UnicodeEncodeError:
+                # Fallback for terminals with limited encoding (e.g., Windows cp1252)
+                print(text.encode('utf-8', errors='replace').decode('utf-8', errors='replace'))
         else:
-            print(json.dumps(item, indent=2))
+            print(json.dumps(item, indent=2, ensure_ascii=False))
 
 
 def call_tool(tool_name: str, args_json: Optional[str], tools: List[Dict[str, Any]]) -> None:
@@ -132,9 +141,12 @@ def call_tool(tool_name: str, args_json: Optional[str], tools: List[Dict[str, An
         arguments = json.loads(args_json) if args_json else {}
     except json.JSONDecodeError as error:
         print(f"Error parsing JSON arguments: {error}", file=sys.stderr)
+        print(f"\nExpected JSON format: {{'key': 'value', 'key2': 'value2'}}", file=sys.stderr)
+        print(f"Example: deepwiki call ask_wiki_question '{{\"repoName\":\"facebook/react\",\"question\":\"How is this organized?\"}}'\n", file=sys.stderr)
+        print(f"Note: Use double quotes inside the JSON and wrap the entire argument in single quotes on most shells.", file=sys.stderr)
         sys.exit(1)
     if not isinstance(arguments, dict):
-        print("Error: Tool arguments must be a JSON object.", file=sys.stderr)
+        print("Error: Tool arguments must be a JSON object (e.g., {\"key\": \"value\"}).", file=sys.stderr)
         sys.exit(1)
 
     print_result(rpc_request("tools/call", {"name": tool_name, "arguments": arguments}))

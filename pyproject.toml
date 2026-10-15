@@ -39,6 +39,10 @@ classifiers = [
 ]
 dependencies = []
 
+[project.optional-dependencies]
+test = ["pytest>=7.0", "pytest-cov>=3.0"]
+dev = ["pytest>=7.0", "pytest-cov>=3.0"]
+
 [project.urls]
 Homepage = "https://github.com/davidw-philips/deepwiki"
 Repository = "https://github.com/davidw-philips/deepwiki.git"
