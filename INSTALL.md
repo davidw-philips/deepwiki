@@ -2,7 +2,21 @@
 
 This guide covers installing and configuring `deepwiki` across different environments and shells.
 
-## Quick Install with `uv` (Recommended)
+## Quick Install with Windows PowerShell (Recommended)
+
+```powershell
+.\install.ps1
+```
+
+This script:
+- Configures `PYTHONIOENCODING=utf-8` at the user level (persistent across sessions)
+- Sets it for the current session (works immediately)
+- Installs deepwiki via `uv tool`
+- Verifies the installation
+
+---
+
+## Quick Install with `uv` (Alternative)
 
 ```bash
 uv tool install git+https://github.com/davidw-philips/deepwiki
